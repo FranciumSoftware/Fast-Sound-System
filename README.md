@@ -21,6 +21,8 @@ The most popular audio format are supported like:
 | Free lossless audio codec file | `.flac` | ✅ |
 | Opus files | `.opus` or `.ogg` | ✅ (I recommand you to have [VLC]("https://www.videolan.org/vlc/") installed) |
 
+## Build
+The project is made with qt creator 17.0 and Qt Framework 6.9.1
 
 ⚠️ Currently the software is only available in French.
 ### If you have any problems or feature requests, feel free to tell me.
