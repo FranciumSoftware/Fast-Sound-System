@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/Styles">
+        <file>styles.qss</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>styles.qss</file>
+        <file>assets/Next16px.png</file>
+        <file>assets/Next16px.svg</file>
+        <file>assets/Next64px.png</file>
+        <file>assets/Next64px.svg</file>
+        <file>assets/pause16px.png</file>
+        <file>assets/pause16px.svg</file>
+        <file>assets/pause64px.png</file>
+        <file>assets/pause64px.svg</file>
+        <file>assets/play16px.png</file>
+        <file>assets/play16px.svg</file>
+        <file>assets/play32px.png</file>
+        <file>assets/play32px.svg</file>
+        <file>assets/Prev16px.png</file>
+        <file>assets/Prev16px.svg</file>
+        <file>assets/Prev64px.png</file>
+        <file>assets/Prev64px.svg</file>
+        <file>assets/Stop16px.png</file>
+        <file>assets/Stop16px.svg</file>
+        <file>assets/Stop64px.png</file>
+        <file>assets/Stop64px.svg</file>
+        <file>assets/icon.png</file>
+        <file>assets/icon.svg</file>
+    </qresource>
+</RCC>

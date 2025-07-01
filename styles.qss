@@ -1,0 +1,188 @@
+/* styles.qss */
+
+QMainWindow {
+    background-color: #1d1d1d;
+}
+
+QPushButton {
+    background-color: #3b3b3b;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+QPushButton#PlayButton, QPushButton#StopButton {
+    background-color: #3b3b3b;
+    border: none;
+    color: white;
+    padding:5px;
+    width:65px;
+    height: 60px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+QPushButton#PlayButton:hover, QPushButton#StopButton:hover {
+    background-color: #4c4c4c;
+    border-bottom: 3px solid purple;
+    padding-bottom:2px;
+    padding-bottom:2px;
+}
+QPushButton#PrevButton{
+    background-color: #3b3b3b;
+    border: none;
+    color: white;
+    padding:5px;
+    width:65px;
+    height: 60px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+}
+QPushButton#NextButton{
+    background-color: #3b3b3b;
+    border: none;
+    color: white;
+    padding:5px;
+    width:65px;
+    height: 60px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+QPushButton:hover {
+    background-color: #4c4c4c;
+    border-bottom: 3px solid purple;
+    padding-bottom:2px;
+    padding-bottom:2px;
+}
+QPushButton#PrevButton:hover, QPushButton#NextButton:hover {
+    background-color: #4c4c4c;
+    border-bottom: 3px solid purple;
+    padding-bottom:2px;
+}
+QPushButton#deleteLine{
+    background-color: #3b3b3b;
+    border: none;
+    color: red;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+QPushButton#addRowButton{
+    background-color: #3b3b3b;
+    border: none;
+    color: green;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+QPushButton#upButton, QPushButton#downButton {
+    background-color: #3b3b3b;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+QPushButton#upButton:hover, QPushButton#downButton:hover {
+    padding-bottom:2px;
+    background-color: #4c4c4c;
+    border: none;
+    color: white;
+    padding:5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 3px solid purple;
+    padding-bottom:2px;
+}
+QPushButton#addRowButton:hover{
+    background-color: #4c4c4c;
+    padding-bottom:2px;
+    border-bottom: 3px solid green;
+}
+QPushButton#deleteLine:hover{
+    background-color: #4c4c4c;
+    padding-bottom:2px;
+    border-bottom: 3px solid red;
+}
+
+QListWidget {
+    background-color: #101010;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d0d0d0;
+    border-radius: 4px;
+}
+QSlider::sub-page:horizontal {
+    background: #745dfc;
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    width: 8px;
+    margin: -5px 0;
+    border-radius: 4px;
+    background: #633c88;
+}
+QSlider::handle:horizontal::hover {
+    width: 14px;
+    margin: -5px 0;
+    border-radius: 4px;
+    background: #633c88;
+}
+QMenuBar{
+    border-radius: 0px;
+    background:#2a2a2a;
+}
+QMenuBar::item {
+    background: #2a2a2a;
+    color: white;
+    padding: 5px 10px;
+}
+QMenuBar::item:selected{
+    background: #3d3d3d;
+    color: white;
+    padding: 5px 10px;
+}
+QMenu{
+    border-radius:0px;
+    background-color: rgb(8, 0, 20);
+    
+}
+QMenu::item {
+    padding: 5px 20px;
+    color: white;
+}
+QMenu#menuAide{
+    border-radius:0px;
+}
+QMenu::item:selected {
+    padding-left:17px;
+    background-color: #535353;
+    border-left: 3px solid purple;
+}
+QAction{
+    border-radius: 0px;
+}
+QAction:hover{
+    background-color: #c10707;
+}
