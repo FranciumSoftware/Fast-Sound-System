@@ -1,36 +1,36 @@
-
-
-name: FSS macOS
+name: Build Qt CMake App for macOS
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # Step 1: Check out the repository
+      - name: Check out source code
+        uses: actions/checkout@v4
 
-      - name: Install Qt
+      # Step 2: Install dependencies
+      - name: Install dependencies
         run: |
-          brew install qt
+          brew update
+          brew install qt cmake
 
-      - name: Install CMake
-        run: |
-          brew install cmake
+      # Step 3: Configure the build
+      - name: Configure CMake
+        run: cmake -B build -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=$(brew --prefix qt)
 
-      - name: Build Qt App
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build .
+      # Step 4: Build the project
+      - name: Build the project
+        run: cmake --build build --config Release
 
-      - name: Upload artifact
-  uses: actions/upload-artifact@v4
-  with:
-    name: FSS-darwin
-    path: build/FSS-darwin.app
+      # Step 5: Optional - Run tests
+      - name: Run tests
+        run: ctest --test-dir build
