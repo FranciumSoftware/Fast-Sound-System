@@ -1,3 +1,4 @@
+
 name: Build Qt CMake App for macOS
 
 on:
@@ -14,6 +15,10 @@ jobs:
 
     steps:
       # Step 1: Check out the repository
+      - name: Clean build directory
+        run: |
+          rm -rf build
+          mkdir build
       - name: Check out source code
         uses: actions/checkout@v4
 
