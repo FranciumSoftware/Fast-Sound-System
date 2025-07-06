@@ -80,7 +80,7 @@ endif()
 
 # Install 
 install(TARGETS FastSoundSystem
-    BUNDLE DESTINATION .  # Install the .app bundle in the current directory
+    BUNDLE DESTINATION ./build  # Install the .app bundle in the current directory
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
