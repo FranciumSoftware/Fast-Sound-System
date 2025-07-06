@@ -1,0 +1,35 @@
+
+name: FSS macOS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Qt
+        run: |
+          brew install qt
+
+      - name: Install CMake
+        run: |
+          brew install cmake
+
+      - name: Build Qt App
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: FSS-darwin
+          path: build/FSS-darwin.app
