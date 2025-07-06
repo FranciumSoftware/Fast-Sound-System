@@ -20,7 +20,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(LINUX_PLATFORM TRUE)
 endif()
 
-# Find Qt5 or Qt6 components
+# Find Qt components
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Multimedia)
 
@@ -37,12 +37,21 @@ set(PROJECT_SOURCES
     ressources.qrc
     edit.h edit.cpp edit.ui
     comboboxdelegate.h comboboxdelegate.cpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/common.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/Dialog.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/Equalizer.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/EventManager.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/Instance.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/Internal.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/Media.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/MediaDiscoverer.hpp
+    ${CMAKE_SOURCE_DIR}/vlcpp/MediaLibrary.hpp
     audio_loader.h audio_loader.cpp
     filemanagerdialog.h filemanagerdialog.cpp filemanagerdialog.ui
     aubout.h aubout.cpp aubout.ui
 )
 
-# Configure executable or library for different platforms
+# Configure executable for different platforms
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FastSoundSystem
         MANUAL_FINALIZATION
@@ -75,42 +84,16 @@ if(MACOS_PLATFORM)
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         MACOSX_BUNDLE_GUI_IDENTIFIER com.franciumsoftware.FastSoundSystem
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist # Optional, if you have a custom Info.plist
     )
 endif()
 
 # Install rules
-include(GNUInstallDirs)
 install(TARGETS FastSoundSystem
-    BUNDLE DESTINATION .
+    BUNDLE DESTINATION .  # Install the .app bundle in the current directory
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# Finalize Qt executable if using Qt6
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(FastSoundSystem)
-endif()
-# Include CPack for generating packages
-include(CPack)
-
-# Set basic package properties
-set(CPACK_PACKAGE_NAME "FastSoundSystem")
-set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
-set(CPACK_PACKAGE_CONTACT "your-email@example.com")
-
-# Specify package format for macOS
-if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    set(CPACK_GENERATOR "DragNDrop") # macOS DMG package
-    set(CPACK_BUNDLE_NAME "FastSoundSystem")
-endif()
-
-# Specify installation directory (optional, customize as needed)
-set(CPACK_PACKAGING_INSTALL_PREFIX "/Applications")
-
-# Configure other metadata (optional)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast Sound System Application")
-set(CPACK_PACKAGE_VENDOR "Francium Software")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
-
-# Finalize CPack
-include(CPack)
+# Exclude CPack DragNDrop generator (no .dmg file)
+set(CPACK_GENERATOR "")  #
