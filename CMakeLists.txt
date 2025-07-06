@@ -68,14 +68,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     target_link_libraries(FastSoundSystem PRIVATE Qt6::Multimedia)
 endif()
 
-# macOS-specific bundle settings
+# 
 if(MACOS_PLATFORM)
     set_target_properties(FastSoundSystem PROPERTIES
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         MACOSX_BUNDLE_GUI_IDENTIFIER com.franciumsoftware.FastSoundSystem
-        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist # Optional, if you have a custom Info.plist
     )
 endif()
 
