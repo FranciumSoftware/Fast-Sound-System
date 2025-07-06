@@ -37,7 +37,6 @@ set(PROJECT_SOURCES
     ressources.qrc
     edit.h edit.cpp edit.ui
     comboboxdelegate.h comboboxdelegate.cpp
-    vlcpp/common.hpp vlcpp/Dialog.hpp vlcpp/Equalizer.hpp vlcpp/EventManager.hpp vlcpp/Instance.hpp vlcpp/Internal.hpp vlcpp/Media.hpp vlcpp/MediaDiscoverer.hpp vlcpp/MediaLibrary.hpp
     audio_loader.h audio_loader.cpp
     filemanagerdialog.h filemanagerdialog.cpp filemanagerdialog.ui
     aubout.h aubout.cpp aubout.ui
