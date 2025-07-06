@@ -37,15 +37,6 @@ set(PROJECT_SOURCES
     ressources.qrc
     edit.h edit.cpp edit.ui
     comboboxdelegate.h comboboxdelegate.cpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/common.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/Dialog.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/Equalizer.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/EventManager.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/Instance.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/Internal.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/Media.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/MediaDiscoverer.hpp
-    ${CMAKE_SOURCE_DIR}/vlcpp/MediaLibrary.hpp
     audio_loader.h audio_loader.cpp
     filemanagerdialog.h filemanagerdialog.cpp filemanagerdialog.ui
     aubout.h aubout.cpp aubout.ui
