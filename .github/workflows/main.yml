@@ -1,5 +1,4 @@
-
-name: Build Qt CMake App for macOS
+name: Build and Package macOS App
 
 on:
   push:
@@ -10,34 +9,36 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-package:
     runs-on: macos-latest
 
     steps:
       # Step 1: Check out the repository
+      - name: Check out source code
+        uses: actions/checkout@v4
+
+      # Step 2: Clean build directory
       - name: Clean build directory
         run: |
           rm -rf build
           mkdir build
-      - name: Check out source code
-        uses: actions/checkout@v4
 
-      # Step 2: Install dependencies
+      # Step 3: Install dependencies
       - name: Install Qt and CMake
         run: |
           brew update
           brew install qt cmake
 
-      # Step 3: Configure CMake
-      - name: Run CMake configuration
+      # Step 4: Configure CMake
+      - name: Configure CMake
         run: cmake -B build -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=$(brew --prefix qt)
 
-      # Step 4: Build the project
+      # Step 5: Build the project
       - name: Build the application
         run: cmake --build build --config Release
 
-      # Step 5: Package the application (optional)
-      - name: Package the macOS bundle
+      # Step 6: Package the application
+      - name: Package the application
         run: |
           cd build
           make package
