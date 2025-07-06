@@ -40,12 +40,8 @@ jobs:
       - name: Build the application
         run: cmake --build build --config Release
 
-      # Step 6: Deploy dependencies into .app bundle
-      - name: Deploy dependencies
-        run: |
-              /opt/homebrew/opt/qt/bin/macdeployqt build/FastSoundSystem.app -executable=build/FastSoundSystem.app/Contents/MacOS/FastSoundSystem
 
 
-      # Step 7: Verify the .app bundle (optional)
+      # Step 6: Verify the .app bundle (optional)
       - name: Verify .app bundle
         run: ls -al build/FastSoundSystem.app
