@@ -90,3 +90,27 @@ install(TARGETS FastSoundSystem
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FastSoundSystem)
 endif()
+# Include CPack for generating packages
+include(CPack)
+
+# Set basic package properties
+set(CPACK_PACKAGE_NAME "FastSoundSystem")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_CONTACT "your-email@example.com")
+
+# Specify package format for macOS
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(CPACK_GENERATOR "DragNDrop") # macOS DMG package
+    set(CPACK_BUNDLE_NAME "FastSoundSystem")
+endif()
+
+# Specify installation directory (optional, customize as needed)
+set(CPACK_PACKAGING_INSTALL_PREFIX "/Applications")
+
+# Configure other metadata (optional)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast Sound System Application")
+set(CPACK_PACKAGE_VENDOR "Francium Software")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
+
+# Finalize CPack
+include(CPack)
