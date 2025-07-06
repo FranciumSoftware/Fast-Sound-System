@@ -37,7 +37,11 @@ jobs:
       - name: Build the application
         run: cmake --build build --config Release
 
-      # Step 6: Package the application
+      # Step 6: Debug build directory (optional)
+      - name: Debug build directory
+        run: ls -al build/_CPack_Packages/Darwin-Source/DragNDrop/FastSoundSystem-0.1
+
+      # Step 7: Package the application
       - name: Package the application
         run: |
           cd build
