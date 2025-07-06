@@ -1,4 +1,4 @@
-name: Build and Package macOS App
+name: Build macOS App
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-and-package:
+  build-app:
     runs-on: macos-latest
 
     steps:
@@ -33,16 +33,15 @@ jobs:
       - name: Configure CMake
         run: cmake -B build -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=$(brew --prefix qt)
 
-      # Step 5: Build the project
+      # Step 5: Build the .app bundle
       - name: Build the application
         run: cmake --build build --config Release
 
-      # Step 6: Debug build directory (optional)
-      - name: Debug build directory
-        run: ls -al build/_CPack_Packages/Darwin-Source/DragNDrop/FastSoundSystem-0.1
-
-      # Step 7: Package the application
-      - name: Package the application
+      # Step 6: Deploy dependencies into .app bundle
+      - name: Deploy dependencies
         run: |
-          cd build
-          make package
+          /opt/homebrew/opt/qt/bin/macdeployqt build/FastSoundSystem.app
+
+      # Step 7: Verify the .app bundle (optional)
+      - name: Verify .app bundle
+        run: ls -al build/FastSoundSystem.app
