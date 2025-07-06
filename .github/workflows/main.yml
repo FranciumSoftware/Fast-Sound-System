@@ -32,6 +32,9 @@ jobs:
       # Step 4: Configure CMake
       - name: Configure CMake
         run: cmake -B build -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=$(brew --prefix qt)
+              export PATH="/opt/homebrew/opt/qt/bin:$PATH"
+              export QT_DIR="/opt/homebrew/opt/qt"
+
 
       # Step 5: Build the .app bundle
       - name: Build the application
