@@ -78,8 +78,7 @@ if(MACOS_PLATFORM)
     )
 endif()
 
-# Install rules
-install(TARGETS FastSoundSyst
+# Install 
 install(TARGETS FastSoundSystem
     BUNDLE DESTINATION .  # Install the .app bundle in the current directory
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
