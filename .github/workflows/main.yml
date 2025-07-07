@@ -1,47 +1,133 @@
-name: Build macOS App
+name: Build
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+
+env:
+  VERSION: "1.0.0"
+  EXECUTABLE: "QtApp"
+  APPLICATION: "Qt App"
+  BUILD_DIR: "build"
 
 jobs:
-  build-app:
-    runs-on: macos-latest
+  build-linux:
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
-      - name: Check out source code
-        uses: actions/checkout@v4
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
-      # Step 2: Clean build directory
-      - name: Clean build directory
-        run: |
-          rm -rf build
-          mkdir build
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
 
-      # Step 3: Install dependencies
-      - name: Install Qt and CMake
-        run: |
-          brew update
-          brew install qt cmake
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0
 
-      # Step 4: Configure CMake
-      - name: Configure CMake
-        run: cmake -B build -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=$(brew --prefix qt)
-              export PATH="/opt/homebrew/opt/qt/bin:$PATH"
-              export QT_DIR="/opt/homebrew/opt/qt"
+    - name: Configure with CMake
+      run: |
+        mkdir -p ${{env.BUILD_DIR}}
+        cd ${{env.BUILD_DIR}}
+        cmake .. -DCMAKE_BUILD_TYPE=Release
 
+    - name: Build
+      run: |
+        cd ${{env.BUILD_DIR}}
+        cmake --build . --config Release
 
-      # Step 5: Build the .app bundle
-      - name: Build the application
-        run: cmake --build build --config Release
+    - name: Create AppImage
+      run: |
+        wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" -O linuxdeployqt
+        chmod a+x linuxdeployqt
+        ./linuxdeployqt AppDir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs
 
+    - name: Rename AppImage
+      run: mv *.AppImage ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
 
+    - name: Upload AppImage
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
+        path: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
 
-      # Step 6: Verify the .app bundle (optional)
-      - name: Verify .app bundle
-        run: ls -al build/FastSoundSystem.app
+  build-mac:
+    runs-on: macos-11
+
+    steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+
+    - name: Configure with CMake
+      run: |
+        mkdir -p ${{env.BUILD_DIR}}
+        cd ${{env.BUILD_DIR}}
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: |
+        cd ${{env.BUILD_DIR}}
+        cmake --build . --config Release
+
+    - name: Deploy app
+      run: |
+        macdeployqt ${{env.EXECUTABLE}}.app
+        mv "${{env.EXECUTABLE}}.app" "${{env.APPLICATION}}.app"
+
+    - name: Create ZIP file
+      run: |
+        ditto -c -k --sequesterRsrc --keepParent "${{env.APPLICATION}}.app" ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+
+    - name: Upload ZIP
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+        path: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Configure MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+
+    - name: Configure with CMake
+      run: |
+        mkdir -p ${{env.BUILD_DIR}}
+        cd ${{env.BUILD_DIR}}
+        cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: |
+        cd ${{env.BUILD_DIR}}
+        cmake --build . --config Release
+
+    - name: Deploy
+      run: |
+        windeployqt Release\${{env.EXECUTABLE}}.exe --compiler-runtime
+        mkdir "${{env.APPLICATION}}"
+        move Release "${{env.APPLICATION}}"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows
+        path: ${{env.APPLICATION}}
