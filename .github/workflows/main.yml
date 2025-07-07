@@ -87,7 +87,7 @@ jobs:
         ditto -c -k --sequesterRsrc --keepParent "${{env.APPLICATION}}.app" ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
 
     - name: Upload ZIP
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
         path: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
@@ -127,7 +127,7 @@ jobs:
         move Release "${{env.APPLICATION}}"
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows
         path: ${{env.APPLICATION}}
