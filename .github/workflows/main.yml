@@ -34,7 +34,7 @@ jobs:
 
       - name: 📦 Bundle Application with macdeployqt
         run: |
-          "$HOME/Qt/6.5.2/macos/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
+          "$INSTALL_QT_DIR/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
 
       - name: 🛫 Upload macOS App Bundle
         uses: actions/upload-artifact@v4
