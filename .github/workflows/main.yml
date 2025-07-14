@@ -16,13 +16,19 @@ jobs:
     steps:
       - name: 🧾 Checkout repository
         uses: actions/checkout@v3
-
       - name: 📦 Install Qt
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.5.2'
           target: 'desktop'
           arch: ${{ matrix.os == 'windows-latest' && 'win64_mingw' || matrix.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
+      - name: Install Qt with Multimedia
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.5.2'
+          modules: 'qtmultimedia'
+          target: 'desktop'
+          arch: 'clang_64'
 
       - name: 🧰 Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
