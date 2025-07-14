@@ -1,4 +1,4 @@
-#include "FileManagerDialog.h"
+#include "filemanagerdialog.h"
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QDir>
