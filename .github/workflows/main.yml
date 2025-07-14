@@ -1,4 +1,4 @@
-name: Build Qt App - For macOS
+name: macOS Qt Universal Build
 
 on:
   push:
@@ -7,37 +7,37 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [macos-latest]
-    runs-on: ${{ matrix.os }}
+  build-macos:
+    runs-on: macos-latest
 
     steps:
-      - name: 🧾 Checkout repository
+      - name: 🧾 Checkout Repository
         uses: actions/checkout@v3
-      
-      - name: Install Qt with Multimedia
+
+      - name: 📦 Install Qt with Multimedia
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.5.2'
-          modules: 'qtmultimedia'
           target: 'desktop'
-          arch: ${{ matrix.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
+          arch: 'clang_64'
+          modules: 'qtmultimedia'
 
-      - name: 🧰 Configure CMake
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: 🧰 Configure CMake for Universal Build
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
+            -DCMAKE_PREFIX_PATH="$HOME/Qt/6.5.2/macos"
 
-      - name: 🏗️ Build App
+      - name: 🏗️ Build Application
         run: cmake --build build --config Release
 
-      - name: 📁 Package App
+      - name: 📦 Bundle Application with macdeployqt
         run: |
-            echo "macOS packaging with macdeployqt..."
-            echo "Windows packaging with windeployqt..."
+          "$HOME/Qt/6.5.2/macos/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
 
-      - name: 🛫 Upload Artifact
+      - name: 🛫 Upload macOS App Bundle
         uses: actions/upload-artifact@v4
         with:
-          name: QtApp-${{ matrix.os }}
-          path: build/
+          name: FastSoundSystem-macOS
+          path: build/FastSoundSystem.app
