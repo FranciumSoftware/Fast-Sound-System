@@ -1,4 +1,4 @@
-name: Build Qt App - Step by Step
+name: Build Qt App - For macOS
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -23,7 +23,7 @@ jobs:
           version: '6.5.2'
           modules: 'qtmultimedia'
           target: 'desktop'
-          arch: ${{ matrix.os == 'windows-latest' && 'win64_mingw' || matrix.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
+          arch: ${{ matrix.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
 
       - name: 🧰 Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -33,14 +33,8 @@ jobs:
 
       - name: 📁 Package App
         run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            echo "Linux packaging with cpack or AppImage..."
-            # Exemple : cpack -G DEB
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             echo "macOS packaging with macdeployqt..."
-          elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             echo "Windows packaging with windeployqt..."
-          fi
 
       - name: 🛫 Upload Artifact
         uses: actions/upload-artifact@v4
