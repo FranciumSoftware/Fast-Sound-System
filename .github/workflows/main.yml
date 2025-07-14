@@ -21,7 +21,9 @@ jobs:
           target: 'desktop'
           arch: 'clang_64'
           modules: 'qtmultimedia'
-
+      - name: 🔍 Debug Qt install path
+        run: echo "Qt installed at:$INSTALL_QT_DIR"
+        
       - name: 🧰 Configure CMake for Universal Build
         run: |
           cmake -S . -B build \
