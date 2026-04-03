@@ -82,8 +82,8 @@ if(MACOS_PLATFORM)
     )
 endif()
 
-# Install (optional, handled by GitHub Actions)
-# install(TARGETS FastSoundSystem
+Install (optional, handled by GitHub Actions)
+install(TARGETS FastSoundSystem
     BUNDLE DESTINATION ./build
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
