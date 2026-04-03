@@ -23,25 +23,21 @@ jobs:
           modules: 'qtmultimedia'
 
       - name: 🔍 Debug Installation Path
-        run: echo "Qt should be installed at: ${{ env.Qt6_DIR }}"
+        run: echo "Qt should be installed at: $Qt6_DIR"
         
       - name: 🧰 Configure CMake for Universal Build
-        env:
-          QT_PATH: ${{ env.Qt6_DIR }}
         run: |
           cmake -S ./src -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
-            -DCMAKE_PREFIX_PATH="${QT_PATH}"
+            -DCMAKE_PREFIX_PATH="$Qt6_DIR"
 
       - name: 🏗️ Build Application
         run: cmake --build build --config Release
 
       - name: 📦 Bundle Application with macdeployqt
-        env:
-          QT_PATH: ${{ env.Qt6_DIR }}
         run: |
-          "${QT_PATH}/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
+          "$Qt6_DIR/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
 
       - name: 🛫 Upload macOS App Bundle
         uses: actions/upload-artifact@v4
