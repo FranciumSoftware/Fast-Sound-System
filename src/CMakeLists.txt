@@ -82,12 +82,12 @@ if(MACOS_PLATFORM)
     )
 endif()
 
-Install (optional, handled by GitHub Actions)
-install(TARGETS FastSoundSystem
-    BUNDLE DESTINATION ./build
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+# Install (optional, handled by GitHub Actions)
+# install(TARGETS FastSoundSystem
+#    BUNDLE DESTINATION ./build
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
 
 # Exclude CPack DragNDrop generator (no .dmg file)
 set(CPACK_GENERATOR "")
