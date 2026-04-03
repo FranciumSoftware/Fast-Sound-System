@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: 🧾 Checkout Repository
+      - name: 🧷 Checkout Repository
         uses: actions/checkout@v4
 
       - name: 📦 Install Qt with Multimedia
@@ -23,9 +23,9 @@ jobs:
           modules: 'qtmultimedia'
 
       - name: 🔍 Debug Installation Path
-        run: echo "Qt should be installed at: $Qt6_DIR"
+        run: echo "Qt should be installed at $Qt6_DIR"
         
-      - name: 🧰 Configure CMake for Universal Build
+      - name: 🛠️ Configure CMake for Universal Build
         run: |
           cmake -S ./src -B build \
             -DCMAKE_BUILD_TYPE=Release \
