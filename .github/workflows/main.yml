@@ -23,7 +23,7 @@ jobs:
           modules: 'qtmultimedia'
 
       - name: 🔍 Debug Installation Path
-        run: echo "Qt should be installed at: $Qt6_DIR"
+        run: echo "Qt should be installed at: ${{ env.Qt6_DIR }}"
         
       - name: 🧰 Configure CMake for Universal Build
         env:
