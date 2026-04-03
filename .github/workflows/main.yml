@@ -17,12 +17,13 @@ jobs:
       - name: 📦 Install Qt with Multimedia
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.5.2'
+          version: '6.10'
           target: 'desktop'
           arch: 'clang_64'
           modules: 'qtmultimedia'
-      - name: 🔍 Debug Qt install path
-        run: echo "Qt installed at:$INSTALL_QT_DIR"
+
+      - name: 🔍 Debug Installation Path
+        run: echo "Qt should be installed at: $INSTALL_QT_DIR"
         
       - name: 🧰 Configure CMake for Universal Build
         run: |
