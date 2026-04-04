@@ -35,7 +35,7 @@ set(PROJECT_SOURCES
     mainwindow.ui
     ${TS_FILES}
     ressources.qrc
-    edit.h edit.cpp edit.ui
+    playlist/edit.h playlist/edit.cpp playlist/edit.ui
     comboboxdelegate.h comboboxdelegate.cpp
     audio_loader.h audio_loader.cpp
     filemanagerdialog.h filemanagerdialog.cpp filemanagerdialog.ui
