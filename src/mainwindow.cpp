@@ -4,7 +4,7 @@
 #include "aubout.h"
 #include <QDir>
 #include <QFile>
-#include "playlist/edit.h"
+#include "edit.h"
 #include <QTextStream>
 #include <QDebug>
 #include <QUrl>
