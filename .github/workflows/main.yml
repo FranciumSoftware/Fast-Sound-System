@@ -11,32 +11,39 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: 🧾 Checkout Repository
-        uses: actions/checkout@v3
+      - name: 🧷 Checkout Repository
+        uses: actions/checkout@v4
 
       - name: 📦 Install Qt with Multimedia
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.5.2'
+          version: '6.10'
           target: 'desktop'
           arch: 'clang_64'
           modules: 'qtmultimedia'
-      - name: 🔍 Debug Qt install path
-        run: echo "Qt installed at:$INSTALL_QT_DIR"
-        
-      - name: 🧰 Configure CMake for Universal Build
+
+      - name: 🌐 Add Qt to PATH
+        # Cette étape permet d'utiliser 'macdeployqt' directement sans le chemin complet
+        run: echo "$QT_ROOT_DIR/bin" >> $GITHUB_PATH
+
+      - name: 🔍 Debug Installation Path
         run: |
-          cmake -S . -B build \
+          echo "Qt is installed at: $QT_ROOT_DIR"
+          which macdeployqt
+
+      - name: 🛠️ Configure CMake for Universal Build
+        run: |
+          cmake -S ./src -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
-            -DCMAKE_PREFIX_PATH="$HOME/Qt/6.5.2/macos"
+            -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
 
       - name: 🏗️ Build Application
         run: cmake --build build --config Release
 
       - name: 📦 Bundle Application with macdeployqt
         run: |
-          "$INSTALL_QT_DIR/bin/macdeployqt" build/FastSoundSystem.app -verbose=2
+          macdeployqt build/FastSoundSystem.app -verbose=2
 
       - name: 🛫 Upload macOS App Bundle
         uses: actions/upload-artifact@v4

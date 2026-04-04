@@ -16,6 +16,10 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     set(WINDOWS_PLATFORM TRUE)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(MACOS_PLATFORM TRUE)
+    # macOS-specific settings
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "Build for both Intel and Apple Silicon")
+    set(CMAKE_OSX_SYSROOT "macosx11.0" CACHE STRING "Use Big Sur SDK")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum deployment target")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(LINUX_PLATFORM TRUE)
 endif()
@@ -68,7 +72,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     target_link_libraries(FastSoundSystem PRIVATE Qt6::Multimedia)
 endif()
 
-# 
+# macOS bundle properties
 if(MACOS_PLATFORM)
     set_target_properties(FastSoundSystem PROPERTIES
         MACOSX_BUNDLE TRUE
@@ -78,12 +82,12 @@ if(MACOS_PLATFORM)
     )
 endif()
 
-# Install 
-install(TARGETS FastSoundSystem
-    BUNDLE DESTINATION ./build  # Install the .app bundle in the current directory
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+# Install (optional, handled by GitHub Actions)
+# install(TARGETS FastSoundSystem
+#    BUNDLE DESTINATION ./build
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
 
 # Exclude CPack DragNDrop generator (no .dmg file)
-set(CPACK_GENERATOR "")  #
+set(CPACK_GENERATOR "")
