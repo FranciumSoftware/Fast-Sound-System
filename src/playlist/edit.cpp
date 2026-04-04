@@ -1,6 +1,6 @@
 #include "edit.h"
 #include "ui_edit.h"
-#include "comboboxdelegate.h"
+#include "../comboboxdelegate.h"
 #include <QFile>
 #include <QTextStream>
 
